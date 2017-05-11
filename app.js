@@ -17,6 +17,24 @@ var app = express();
 
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
+app.set('view engine', 'ejs');
+app.engine('.html', require('ejs').__express); //两个下划线
+app.get("/lftest",function(req,res){
+
+console.log("I add a router");
+
+res.send("this is my test")
+
+
+})
+
+app.get('/lftestPG', function(req, res) {
+        console.log('enter a ejs page');
+    res.render('test', {
+        mytitle : "lvfei_bluemixProject"
+    });
+    })
+
 
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
