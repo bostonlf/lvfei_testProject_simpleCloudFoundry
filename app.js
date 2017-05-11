@@ -14,7 +14,7 @@ var cfenv = require('cfenv');
 
 // create a new express server
 var app = express();
-
+var routes = require('./routes/index');
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
@@ -35,6 +35,17 @@ app.get('/lftestPG', function(req, res) {
     });
     })
 
+
+app.use('/', routes);
+
+
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
+});
 
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
